@@ -13,6 +13,6 @@ using namespace std;
 int main() {
 
 	research_server *server = new research_server();
-	server->run();
+	server->start();
 	return 0;
 }

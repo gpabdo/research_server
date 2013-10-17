@@ -23,11 +23,12 @@ class research_server
 public:
 	research_server();
 	~research_server();
-	void ui();
-	void addJob(char * array[]);
-	int getStatus();
+	void start();
 
 private:
+	void ui();
+	int getStatus();
+	void addJob(char * array[]);
 	void runJob();
 	void handleRxQueue();
 	void registerWorker();

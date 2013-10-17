@@ -15,9 +15,9 @@ class message : public listObject
 public:
 	message(int, int);		// Pass in fd and command;
 
-	void setFd();
-	void setStatus();
-	void setCommand();
+	void setFd(int);
+	void setStatus(int);
+	void setCommand(int);
 	void setData(string);
 
 	int getFd();

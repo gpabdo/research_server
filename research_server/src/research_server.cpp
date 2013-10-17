@@ -22,6 +22,13 @@ research_server::research_server()
 	to_do_queue = NULL;
 	in_progress_queue = NULL;
 	finished_queue = NULL;
+}
+
+/******************************************************************
+*
+******************************************************************/
+void research_server::start()
+{
 	tx = new thread(&research_server::txThread, this);
 	rx = new thread(&research_server::rxThread, this);
 	runner = new thread(&research_server::runJob, this);
@@ -52,18 +59,18 @@ void research_server::runJob()
 {
 	while( true )
 	{
-		if(!job_list->isEmpty())
+		if(current_job == NULL && !job_list->isEmpty())
 				loadJob();
 
-		if(!RX_queue->isEmpty())
+		while(!RX_queue->isEmpty())
 			handleRxQueue();
 
 		if(current_job != NULL)
 		{
 			if(!worker_queue->isEmpty())
 			{
-				subSequence *seq = to_do_queue->popFront();
-				worker * needsWork = worker_queue->popFront();
+				subSequence *seq = (subSequence*)to_do_queue->popFront();
+				worker * needsWork = (worker*)worker_queue->popFront();
 				message * newMessage = message(needsWork->getFd(), 103);
 				newMessage->setData(seq->getSubSequence());
 				TX_queue->pushToBack( newMessage);
@@ -87,7 +94,7 @@ void research_server::handleRxQueue()
 	// Worker requesting Ancestor One.
 	if(temp->getCommand() == 101)
 	{
-		message * newMessage = message(temp->getFd(), 101);
+		message * newMessage = new message(temp->getFd(), 101);
 		newMessage->setData(current_job->getAncestorOne()->getSequence());
 		TX_queue->pushToBack( newMessage);
 	}
@@ -95,7 +102,7 @@ void research_server::handleRxQueue()
 	// Worker requesting Ancestor Two.
 	if(temp->getCommand() == 102)
 	{
-		message * newMessage = message(temp->getFd(), 102);
+		message * newMessage = new message(temp->getFd(), 102);
 		newMessage->setData(current_job->getAncestorTwo()->getSequence());
 		TX_queue->pushToBack( newMessage);
 	}
