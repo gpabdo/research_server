@@ -47,6 +47,8 @@ void research_server::ui()
 		cout << "for DNA sequence analysis on distributed systems." << endl;
 		cout << "Enjoy!" << endl << endl;
 
+		string input;
+		cin >> input;
 		// TODO get user input and load into queue
 
 	}
