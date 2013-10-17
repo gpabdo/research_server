@@ -71,7 +71,7 @@ void research_server::runJob()
 			{
 				subSequence *seq = (subSequence*)to_do_queue->popFront();
 				worker * needsWork = (worker*)worker_queue->popFront();
-				message * newMessage = message(needsWork->getFd(), 103);
+				message * newMessage = new message(needsWork->getFd(), 103);
 				newMessage->setData(seq->getSubSequence());
 				TX_queue->pushToBack( newMessage);
 				in_progress_queue->pushToBack(new taskTracker( needsWork->getFd(), seq));
@@ -85,7 +85,7 @@ void research_server::runJob()
 ******************************************************************/
 void research_server::handleRxQueue()
 {
-	message *temp = RX_queue->popFront();
+	message *temp = (message*)RX_queue->popFront();
 
 	// Register new worker.
 	if(temp->getCommand() == 100)
@@ -112,10 +112,10 @@ void research_server::handleRxQueue()
 	{
 		for( int i = 0; i < worker_list->getLength(); i++)
 		{
-			worker * check = worker_list->peekAt(i);
-			if( check->getFd() == temp->getFd() )
+			worker * find = (worker*)worker_list->peekAt(i);
+			if( find->getFd() == temp->getFd() )
 			{
-				worker_queue->pushToBack(check);
+				worker_queue->pushToBack(find);
 				return;
 			}
 		}

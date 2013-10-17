@@ -11,6 +11,7 @@
 #include "linkedList.h"
 #include "subSequence.h"
 #include "ancestor.h"
+#include "listObject.h"
 #include <iostream>
 #include <thread>
 #include <string>

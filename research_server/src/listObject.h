@@ -14,6 +14,7 @@ using namespace std;
 class listObject
 {
 public:
+	virtual ~listObject();
 	virtual string getString() = 0;
 private:
 

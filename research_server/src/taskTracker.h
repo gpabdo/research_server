@@ -19,6 +19,7 @@ class taskTracker : public listObject
 {
 public:
 	taskTracker(int, subSequence *);
+	~taskTracker();
 
 	string getString();
 
