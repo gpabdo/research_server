@@ -34,14 +34,14 @@ private:
 	void registerWorker();
 	void deregisterWorker();
 	void loadJob();
-	void txThread();
-	void rxThread();
 
 	int status;
 
 	thread *tx;
 	thread *rx;
 	thread *runner;
+
+	linkedList *log_list;
 
 	linkedList *TX_queue;
 	linkedList *RX_queue;
@@ -55,6 +55,5 @@ private:
 	linkedList *in_progress_queue;
 	linkedList *finished_queue;
 };
-
 
 #endif /* RESEARCH_SERVER_H_ */

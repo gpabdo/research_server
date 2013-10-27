@@ -18,6 +18,7 @@ research_server::research_server()
 	job_list = new linkedList();
 	worker_list = new linkedList();
 	worker_queue = new linkedList();
+	log_list = new linkedList();
 	current_job = NULL;
 	to_do_queue = NULL;
 	in_progress_queue = NULL;
@@ -29,8 +30,6 @@ research_server::research_server()
 ******************************************************************/
 void research_server::start()
 {
-	tx = new thread(&research_server::txThread, this);
-	rx = new thread(&research_server::rxThread, this);
 	runner = new thread(&research_server::runJob, this);
 	ui();
 }
@@ -40,13 +39,13 @@ void research_server::start()
 ******************************************************************/
 void research_server::ui()
 {
+	cout << "-- research_server loaded --" <<endl << endl;
+	cout << "Welcome to research server, this software is meant " << endl;
+	cout << "for DNA sequence analysis on distributed systems." << endl;
+	cout << "Enjoy!" << endl << endl;
+
 	while( true )
 	{
-		cout << "-- research_server loaded --" <<endl << endl;
-		cout << "Welcome to research server, this software is meant " << endl;
-		cout << "for DNA sequence analysis on distributed systems." << endl;
-		cout << "Enjoy!" << endl << endl;
-
 		string input;
 		cin >> input;
 		// TODO get user input and load into queue
@@ -124,21 +123,6 @@ void research_server::handleRxQueue()
 	}
 }
 
-/******************************************************************
-*
-******************************************************************/
-void research_server::txThread()
-{
-
-}
-
-/******************************************************************
-*
-******************************************************************/
-void research_server::rxThread()
-{
-
-}
 
 /******************************************************************
 *
